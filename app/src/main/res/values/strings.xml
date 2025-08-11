@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidWeatherApp</string>
+    <string name="locationHint">Enter the location</string>
+</resources>
