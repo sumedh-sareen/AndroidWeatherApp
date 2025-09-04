@@ -7,14 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextTextPostalAddress"
+    <AutoCompleteTextView
+        android:id="@+id/postalAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:autofillHints="postalAddress"
         android:ems="10"
         android:inputType="textPostalAddress"
         android:hint="@string/locationHint"
+        android:completionThreshold="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +24,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="What's the weather?"
+        style="@style/TextViewStyle"
+        android:text="@string/weatherTitle"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,34 +35,33 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/weatherIcon"
         android:layout_width="80dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/weatherIconDescription"
         android:src="@android:drawable/editbox_dropdown_light_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/postalAddress" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/weatherDetails"
+        style="@style/TextViewStyle"
         android:layout_marginTop="32dp"
-        android:text="Default text - weather"
+        android:text="@string/weatherDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherIcon" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Default text - suggestions"
+        android:id="@+id/aiSuggestions"
+        style="@style/TextViewStyle"
+        android:text="@string/aiSuggestions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/weatherDetails"
         app:layout_constraintVertical_bias="0.329" />
 </androidx.constraintlayout.widget.ConstraintLayout>

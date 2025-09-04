@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">AndroidWeatherApp</string>
     <string name="locationHint">Enter the location</string>
+    <string name="weatherTitle">What\'s the weather?</string>
+    <string name="weatherIconDescription">Icon visually showing the weather status</string>
+    <string name="weatherDetails">Default text - weather</string>
+    <string name="aiSuggestions">Default text - suggestions</string>
 </resources>
