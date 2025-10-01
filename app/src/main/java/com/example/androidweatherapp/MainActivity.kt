@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
                     }
                     is ScreenStates.ShowData -> {
                         // do something
+                        weather.text = state.weatherData.toString()
                     }
                     is ScreenStates.Error -> {
                         // do something

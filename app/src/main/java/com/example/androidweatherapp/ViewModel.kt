@@ -32,7 +32,7 @@ class ViewModel @Inject constructor(
 
     // initialising states
     val cityList = cityRepo.getCities()
-    val _uistate = MutableStateFlow<ScreenStates>(ScreenStates.Idle) // mutable
+    private val _uistate = MutableStateFlow<ScreenStates>(ScreenStates.Idle) // mutable
     val uistate: StateFlow<ScreenStates> = _uistate.asStateFlow() // immutable
 
     fun changeStates(address: String) {
