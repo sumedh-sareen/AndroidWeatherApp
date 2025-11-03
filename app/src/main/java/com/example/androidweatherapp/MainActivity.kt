@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter // for creating a view out of a list
 import android.widget.AutoCompleteTextView
 
 import androidx.lifecycle.lifecycleScope
+import coil3.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,11 +46,13 @@ class MainActivity : ComponentActivity() {
                     }
                     is ScreenStates.Loading -> {
                         // do something
-                        weather.text = "Weather is "
+                        weather.text = "Loading data..."
                     }
                     is ScreenStates.ShowData -> {
-                        // do something
-                        weather.text = state.weatherData.toString()
+
+                        // using Coil load extension function
+                        icon.load("https://openweathermap.org/img/wn/${state.weatherData.current.weather[0].icon}@2x.png")
+                        weather.text = "Temperature: ${state.weatherData.current.temp} \n Description: ${state.weatherData.current.weather[0].description}"
                     }
                     is ScreenStates.Error -> {
                         // do something
@@ -58,10 +61,6 @@ class MainActivity : ComponentActivity() {
             }
 
         }
-
-
-
-
     }
 }
 

@@ -1,6 +1,5 @@
 package com.example.androidweatherapp.network
 
-import com.example.androidweatherapp.WeatherRepository
 import com.example.androidweatherapp.model.WeatherResponse
 import dagger.Module
 import dagger.Provides
@@ -12,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Qualifier
 
 
 interface WeatherApi {
@@ -25,11 +25,17 @@ interface WeatherApi {
     ): WeatherResponse // need a suspension function for asynchronously running this network api call
 }
 
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class WeatherClient
+
 @Module
 @InstallIn(SingletonComponent::class)
 object WeatherModule {
 
     @Provides
+    @WeatherClient
     fun provideHttpOkClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -45,8 +51,9 @@ object WeatherModule {
     }
 
     @Provides
+    @WeatherClient
     // empower the API interface with retrofit
-    fun provideWeatherRetrofit(client: OkHttpClient): Retrofit {
+    fun provideWeatherRetrofit(@WeatherClient client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/3.0/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -56,7 +63,7 @@ object WeatherModule {
 
     @Provides
     // retrofit enabled interface provided here
-    fun provideWeatherApi(retrofit: Retrofit): WeatherApi { // even though we are just referencing WeatherApi return type here, Hilt automatically creates the object
+    fun provideWeatherApi(@WeatherClient retrofit: Retrofit): WeatherApi { // even though we are just referencing WeatherApi return type here, Hilt automatically creates the object
         // on the dependency injection within the repository
         return retrofit.create(WeatherApi::class.java)
     }

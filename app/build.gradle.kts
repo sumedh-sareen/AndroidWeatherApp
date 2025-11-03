@@ -1,5 +1,4 @@
 import java.io.FileInputStream
-import java.io.FileReader
 import java.util.Properties
 
 
@@ -7,9 +6,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 
 }
 
@@ -27,7 +25,11 @@ configurations.all {
     resolutionStrategy {
         force("org.jetbrains:annotations:23.0.0")
     }
+    exclude(group = "com.intellij", module = "annotations")
+
 }
+
+
 
 android {
     namespace = "com.example.androidweatherapp"
@@ -59,16 +61,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
         buildConfig = true // enable build config for accessing build-time properties
     }
+
 }
 
 
@@ -90,8 +90,14 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(libs.hilt.android)
-    implementation(libs.androidx.room.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
+    // added 2 new here
+    implementation(libs.androidx.room.runtime) // or latest version
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
+
+
 
 
 

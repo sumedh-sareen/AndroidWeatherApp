@@ -1,19 +1,17 @@
 package com.example.androidweatherapp.network
 
 import com.example.androidweatherapp.model.GeoNamesResponse
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import javax.inject.Inject
+import javax.inject.Qualifier
 
 // deals wih making an API call to the places API to get the latitude and longitude values of a place
 interface GeoNamesApi {
@@ -25,11 +23,16 @@ interface GeoNamesApi {
     ): GeoNamesResponse
 }
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class GeoNamesClient
+
 @Module
 @InstallIn(SingletonComponent::class)
 object GeoNamesModule {
 
     @Provides
+    @GeoNamesClient
     fun provideHttpOkClient(): OkHttpClient {
          val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -45,8 +48,9 @@ object GeoNamesModule {
     }
 
     @Provides
+    @GeoNamesClient
     // empower the API interface with retrofit
-    fun provideGeoNamesRetrofit(client: OkHttpClient): Retrofit {
+    fun provideGeoNamesRetrofit(@GeoNamesClient client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("http://api.geonames.org/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -55,7 +59,7 @@ object GeoNamesModule {
     }
 
     @Provides
-    fun provideGeoNamesApi(retrofit: Retrofit): GeoNamesApi {
+    fun provideGeoNamesApi(@GeoNamesClient retrofit: Retrofit): GeoNamesApi {
         return retrofit.create(GeoNamesApi::class.java)
     }
 }
