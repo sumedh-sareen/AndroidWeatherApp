@@ -19,7 +19,8 @@ interface WeatherApi {
     suspend fun getCurrentWeather(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("exclude") exclude: String = "minutely,hourly,daily,alerts",
+//        @Query("exclude") exclude: String = "minutely,hourly,daily,alerts",
+        @Query("exclude") exclude: String = "minutely,daily,alerts",
         @Query("units") units: String = "metric",
         @Query("appid") apiKey: String
     ): WeatherResponse // need a suspension function for asynchronously running this network api call

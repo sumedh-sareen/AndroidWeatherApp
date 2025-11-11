@@ -45,6 +45,7 @@ android {
         // loading the api key values into the build config
         buildConfigField("String", "OPENWEATHER_API_KEY", "\"${localProperties["apiKey"]}\"")
         buildConfigField("String", "GEONAMES_USERNAME", "\"${localProperties["username"]}\"")
+        buildConfigField("String", "TOGETHER_API_KEY", "\"${localProperties["tgt_api_key"]}\"")
 
 
 

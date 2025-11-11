@@ -42,9 +42,9 @@ class ViewModel @Inject constructor(
             // before changing states, need to run validation first
             val weatherValidation = weatherRepo.validation(address) // TODO might need proper validation later
             val weatherData = weatherRepo.getWeatherData(address)
+            val aiSuggestion = aiSuggestRepo.getAiSuggestions(weatherData)
 
-
-            _uistate.value = ScreenStates.ShowData(icon = "placeholder", weatherData = weatherData, aiSuggestion = "placeholder")
+            _uistate.value = ScreenStates.ShowData(icon = "placeholder", weatherData = weatherData, aiSuggestion = aiSuggestion)
 
 
         }

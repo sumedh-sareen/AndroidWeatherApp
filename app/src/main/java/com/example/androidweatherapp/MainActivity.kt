@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
                         // using Coil load extension function
                         icon.load("https://openweathermap.org/img/wn/${state.weatherData.current.weather[0].icon}@2x.png")
                         weather.text = "Temperature: ${state.weatherData.current.temp} \n Description: ${state.weatherData.current.weather[0].description}"
+                        aiSuggestions.text = state.aiSuggestion.toString()
                     }
                     is ScreenStates.Error -> {
                         // do something
